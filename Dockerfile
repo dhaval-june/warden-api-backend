@@ -1,23 +1,4 @@
-# Development stage - Fast and simple
-FROM node:18-alpine AS development
-WORKDIR /app
 
-# Copy package files first for better caching
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci --no-audit --no-fund && npm cache clean --force
-
-# Copy source code
-COPY . .
-
-# Generate Prisma client
-RUN npx prisma generate
-
-EXPOSE 5001
-CMD ["npm", "run", "dev"]
-
-# Production stage - Optimized
 FROM node:18-alpine AS production
 
 # Install security updates
@@ -34,8 +15,9 @@ COPY package*.json ./
 # Install production dependencies only
 RUN npm ci --only=production --no-audit --no-fund && npm cache clean --force
 
-# Copy source and build
 COPY . .
+# Exclude test files from build
+RUN rm -rf src/__tests__/ tests/ *.test.* *.spec.*
 RUN npx prisma generate
 RUN npm run build
 
