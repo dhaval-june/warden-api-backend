@@ -289,8 +289,8 @@ const initializeServices = async () => {
 };
 
 // Start server
-app.listen(port, () => {
-  console.log(`🚀 Redis-Only Server running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Redis-Only Server running on http://0.0.0.0:${port}`);
   console.log(`📊 Health check: http://localhost:${port}/health`);
   console.log(`🏠 Properties API: http://localhost:${port}/get-properties`);
   console.log(`🔍 Suggestions API: http://localhost:${port}/suggestions`);
