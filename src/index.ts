@@ -8,7 +8,7 @@ import { RedisPropertyService } from "./services/redis-property.service";
 import { scheduleEnhancedWeatherUpdates } from "./jobs/weather-update.job";
 
 const app = express();
-const port = process.env.PORT || 5001;
+const port = parseInt(process.env.PORT || '5001', 10);
 
 // ✅ INITIALIZE REDIS SERVICES
 const redisPropertyService = new RedisPropertyService();
